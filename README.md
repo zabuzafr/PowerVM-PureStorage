@@ -144,5 +144,4 @@ python PRA.py \
 * PRA dry-run avant production
 
 == 📄 Licence
-
-À définir (ex: MIT, Apache 2.0)
+MIT
