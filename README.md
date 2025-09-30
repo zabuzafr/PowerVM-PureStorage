@@ -7,7 +7,7 @@ Il a été conçu pour **automatiser la définition des LPARs** d’un site nomi
 
 Objectif principal : garantir que les environnements AIX critiques puissent être redéployés **en moins de 5 minutes** en cas de sinistre.
 
-### Fonctions clés
+## Fonctions clés
 - Découverte des LPARs et WWPN via **IBM HMC**  
 - Préservation des **adresses MAC** pour maintenir les règles firewall/ACL entre sites  
 - Mise à jour des hôtes sur les **baies Pure Storage**  
@@ -25,7 +25,7 @@ Objectif principal : garantir que les environnements AIX critiques puissent êtr
 
 ---
 
-##⚙️ Fonctionnement
+## ⚙️ Fonctionnement
 - Connexion SSH à la HMC
 - Récupération des lsyscfg et lshwres
 - Parsing des WWPNs + validation des MAC
@@ -46,38 +46,42 @@ Objectif principal : garantir que les environnements AIX critiques puissent êtr
   -- Comptes avec droits lecture HMC, écriture hôtes Pure
 
 ---
-🚀Usage (prototype)
+## 🚀Usage (prototype)
 python PRA.py \
   -H <hmc_host> -u <hmc_user> -w <hmc_password> \
   -P <pure_mgmt_ip> -s <pure_user|token> -p <pure_password> \
   --system <managed_system> \
   --exclude-lpar lpar1,lpar2
-🔒 Bénéfices
+
+🔒 B@@ énéfices
 RTO < 5 minutes
 MAC identiques ⇒ firewalls/ACL cohérents
 Nommage standardisé (LPARs, LUNs, Snapshots)
 Automatisation idempotente
-🛠️ Limitations actuelles
+
+## 🛠️ Limitations actuelles
 Fonction update_pure_host_wwn à implémenter
 Gestion des adresses MAC côté PRA à compléter
 CLI à migrer vers argparse
 Script au stade de POC
-🧪 Tests conseillés
-Unitaires : normalisation WWPN, parsing, validation MAC
-Intégration : mocks Paramiko, API Pure
-PRA dry-run avant production
-🗺️ Roadmap
-2005 — Perl v1 : découverte LPAR/WWPN (site nominal → PRA)
-2019 — Python v1 (PRA.py) : migration Perl → Python, intégration Paramiko
-2020 — Python v2 : ajout support Pure Storage (API REST) + standards de nommage LUN/Snapshots
-2022 — Python v3 : conservation stricte des MAC pour cohérence firewall/ACL
-2024 — Python v4 (POC Cloud) : mode --dry-run, rapport Markdown, intégration CI/CD
-2025+ — Vision :
-Intégration Ansible / Terraform
-Supervision PRA via Grafana/Prometheus
-IA/LLM pour génération dynamique de playbooks PRA
-Support cloud hybride (Azure, AWS)
-📄 Licence
+
+
+## 🧪 Tests conseillés
+- Unitaires : normalisation WWPN, parsing, validation MAC
+- Intégration : mocks Paramiko, API Pure
+- PRA dry-run avant production
+
+## Roadmap
+- 2005 — Perl v1 : découverte LPAR/WWPN (site nominal → PRA)
+- 2019 — Python v1 (PRA.py) : migration Perl → Python, intégration Paramiko
+- 2020 — Python v2 : ajout support Pure Storage (API REST) + standards de nommage LUN/Snapshots
+- 2022 — Python v3 : conservation stricte des MAC pour cohérence firewall/ACL
+- 2024 — Python v4 (POC Cloud) : mode --dry-run, rapport Markdown, intégration CI/CD
+- 2025+ — Vision :
+  - Intégration Ansible / Terraform
+  - Supervision PRA via Grafana/Prometheus
+  - IA/LLM pour génération dynamique de playbooks PRA Support cloud hybride (IBM)
+## 📄 Licence
 À définir (ex: MIT, Apache 2.0)
 
 
