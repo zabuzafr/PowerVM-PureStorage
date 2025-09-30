@@ -25,7 +25,7 @@ Objectif principal : garantir que les environnements AIX critiques puissent êtr
 
 ---
 
-###⚙️ Fonctionnement
+##⚙️ Fonctionnement
 - Connexion SSH à la HMC
 - Récupération des lsyscfg et lshwres
 - Parsing des WWPNs + validation des MAC
@@ -34,17 +34,19 @@ Objectif principal : garantir que les environnements AIX critiques puissent êtr
 - Définition des LPAR PRA avec MAC identiques
 - Déclenchement PRA (si sinistre)
 
+---
 
 ## 📦 Prérequis
-Python 3.8+
-Bibliothèques :
-paramiko
-SDK ou REST API Pure Storage
-Accès réseau :
-SSH vers la HMC
-HTTPS vers la baie Pure Storage
-Comptes avec droits lecture HMC, écriture hôtes Pure
-🚀 Usage (prototype)
+- Python 3.8+
+- Bibliothèques pparamiko
+- SDK ou REST API Pure Storage
+- Accès réseau :
+  -- SSH vers la HMC
+  -- HTTPS vers la baie Pure Storage
+  -- Comptes avec droits lecture HMC, écriture hôtes Pure
+
+---
+🚀Usage (prototype)
 python PRA.py \
   -H <hmc_host> -u <hmc_user> -w <hmc_password> \
   -P <pure_mgmt_ip> -s <pure_user|token> -p <pure_password> \
