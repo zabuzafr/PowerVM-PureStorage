@@ -25,15 +25,17 @@ Objectif principal : garantir que les environnements AIX critiques puissent êtr
 
 ---
 
-⚙️ Fonctionnement
-Connexion SSH à la HMC
-Récupération des lsyscfg et lshwres
-Parsing des WWPNs + validation des MAC
-Mise à jour des hôtes sur Pure Storage
-Vérification des LUNs/snapshots répliqués
-Définition des LPAR PRA avec MAC identiques
-Déclenchement PRA (si sinistre)
-📦 Prérequis
+###⚙️ Fonctionnement
+- Connexion SSH à la HMC
+- Récupération des lsyscfg et lshwres
+- Parsing des WWPNs + validation des MAC
+- Mise à jour des hôtes sur Pure Storage
+- Vérification des LUNs/snapshots répliqués
+- Définition des LPAR PRA avec MAC identiques
+- Déclenchement PRA (si sinistre)
+
+
+## 📦 Prérequis
 Python 3.8+
 Bibliothèques :
 paramiko
