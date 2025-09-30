@@ -53,17 +53,17 @@ python PRA.py \
   --system <managed_system> \
   --exclude-lpar lpar1,lpar2
 
-🔒 B@@ énéfices
-RTO < 5 minutes
-MAC identiques ⇒ firewalls/ACL cohérents
-Nommage standardisé (LPARs, LUNs, Snapshots)
-Automatisation idempotente
+## 🔒 B@@ énéfices
+- RTO < 5 minutes
+- MAC identiques ⇒ firewalls/ACL cohérents
+- Nommage standardisé (LPARs, LUNs, Snapshots)
+- Automatisation idempotente
 
 ## 🛠️ Limitations actuelles
-Fonction update_pure_host_wwn à implémenter
-Gestion des adresses MAC côté PRA à compléter
-CLI à migrer vers argparse
-Script au stade de POC
+- Fonction update_pure_host_wwn à implémenter
+- Gestion des adresses MAC côté PRA à compléter
+- CLI à migrer vers argparse
+- Script au stade de POC
 
 
 ## 🧪 Tests conseillés
@@ -82,6 +82,6 @@ Script au stade de POC
   - Supervision PRA via Grafana/Prometheus
   - IA/LLM pour génération dynamique de playbooks PRA Support cloud hybride (IBM)
 ## 📄 Licence
-À définir (ex: MIT, Apache 2.0)
+- MIT
 
 
