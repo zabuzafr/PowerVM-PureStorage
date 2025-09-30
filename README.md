@@ -25,34 +25,55 @@ Objectif principal : garantir que les environnements AIX critiques puissent êtr
 
 ---
 
-## 🧩 Schémas d’architecture & séquence
+⚙️ Fonctionnement
+Connexion SSH à la HMC
+Récupération des lsyscfg et lshwres
+Parsing des WWPNs + validation des MAC
+Mise à jour des hôtes sur Pure Storage
+Vérification des LUNs/snapshots répliqués
+Définition des LPAR PRA avec MAC identiques
+Déclenchement PRA (si sinistre)
+📦 Prérequis
+Python 3.8+
+Bibliothèques :
+paramiko
+SDK ou REST API Pure Storage
+Accès réseau :
+SSH vers la HMC
+HTTPS vers la baie Pure Storage
+Comptes avec droits lecture HMC, écriture hôtes Pure
+🚀 Usage (prototype)
+python PRA.py \
+  -H <hmc_host> -u <hmc_user> -w <hmc_password> \
+  -P <pure_mgmt_ip> -s <pure_user|token> -p <pure_password> \
+  --system <managed_system> \
+  --exclude-lpar lpar1,lpar2
+🔒 Bénéfices
+RTO < 5 minutes
+MAC identiques ⇒ firewalls/ACL cohérents
+Nommage standardisé (LPARs, LUNs, Snapshots)
+Automatisation idempotente
+🛠️ Limitations actuelles
+Fonction update_pure_host_wwn à implémenter
+Gestion des adresses MAC côté PRA à compléter
+CLI à migrer vers argparse
+Script au stade de POC
+🧪 Tests conseillés
+Unitaires : normalisation WWPN, parsing, validation MAC
+Intégration : mocks Paramiko, API Pure
+PRA dry-run avant production
+🗺️ Roadmap
+2005 — Perl v1 : découverte LPAR/WWPN (site nominal → PRA)
+2019 — Python v1 (PRA.py) : migration Perl → Python, intégration Paramiko
+2020 — Python v2 : ajout support Pure Storage (API REST) + standards de nommage LUN/Snapshots
+2022 — Python v3 : conservation stricte des MAC pour cohérence firewall/ACL
+2024 — Python v4 (POC Cloud) : mode --dry-run, rapport Markdown, intégration CI/CD
+2025+ — Vision :
+Intégration Ansible / Terraform
+Supervision PRA via Grafana/Prometheus
+IA/LLM pour génération dynamique de playbooks PRA
+Support cloud hybride (Azure, AWS)
+📄 Licence
+À définir (ex: MIT, Apache 2.0)
 
-### 1) Vue d’ensemble (flux nominal → PRA)
 
-```mermaid
-flowchart LR
-  subgraph Site_Nominal
-    HMC[IBM HMC] --- PVM[PowerVM / Managed Systems]
-    PVM --> LPARS[LPARs (AIX)]
-    LPARS --> WWPN[WWPNs FC]
-    LPARS -. MACs conservées .- NETN[Politiques Réseau / FW]
-    FA1[Pure Storage (Prod)] --> LUNS[LUNs]
-    LUNS --> SNAP[Snapshots]
-  end
-
-  subgraph Réplication
-    SNAP -->|réplication| REPL[Snapshots répliqués]
-  end
-
-  subgraph Site_PRA
-    FA2[Pure Storage (PRA)] --> REPL
-    PVM2[PowerVM (PRA)] --- HMC
-    LPARS2[LPARs (AIX) PRA] -. MACs identiques .- NETP[FW/ACL identiques]
-    LPARS2 --> WWPN2[WWPNs (sync)]
-  end
-
-  HMC -->|Découverte LPAR/WWPN| PRApy[PRA.py]
-  PRApy -->|Maj hôtes + WWPN| FA1
-  PRApy -->|Maj hôtes + WWPN| FA2
-  PRApy -->|Garantit nommage LUN/Snap| FA1
-  PRApy -->|Garantit nommage LUN/Snap| FA2
